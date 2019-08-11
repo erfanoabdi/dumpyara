@@ -18,7 +18,9 @@ fi
 URL=$1
 if echo "$1" | grep "http" ; then
 	cd $PROJECT_DIR/input
-	aria2c -x16 -j$(nproc) ${URL} || wget ${URL} || exit 1
+    ZIP_NAME=$(echo "$RANDOM"_FIRMWARE.tgz)
+	aria2c -x16 -j$(nproc) ${URL} -o "$ZIP_NAME" || wget ${URL} -O "$ZIP_NAME" || exit 1
+    URL="$ZIP_NAME"
 else
 	cp -a "$1" $PROJECT_DIR/input
 fi
